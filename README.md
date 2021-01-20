@@ -4,27 +4,31 @@ What is Vault? See my [HackMD file](https://hackmd.io/@Lu-Shueh-Chou/S1olCKrAD)
 
 Some useful demo see [here](https://hackmd.io/idIbJh-aRj-yT7_1Q5AqKQ)
 
-## authenticate
+Agent? see [here](https://hackmd.io/@Lu-Shueh-Chou/ryAnPIrkO)
+
+## Authenticate
 
 GitHub as example
 
 [detail](authenticate/README.md)
 
-## HA
+## High Availability
 
 Build a standby node and step-down the active node.
-You will see now the original standby node, now become active.
+
+You will see the original standby node become active.
 
 [detail](HA/README.md)
 
-## pki
+## PKI
 
 Build your TLS certificate by Vault.
-This will need `consul-template`, please install first
+
+This will need `consul-template`, please install first.
 
 [detail](pki/README.md)
 
-## token
+## Token
 
 Do some token stuff
 
@@ -35,7 +39,7 @@ Do some token stuff
 
 [detail](token/README.md)
 
-## transit
+## Transit
 
 Encryption as server
 
