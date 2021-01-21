@@ -15,4 +15,5 @@ vault login \
   -token=$(cat github.access.token) \
   > github.token
 
-vault token lookup $(cat github.token)
+vault login $(cat github.token)
+vault print token

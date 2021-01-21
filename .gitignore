@@ -1,8 +1,16 @@
 # Some DB secret I don't want expose
-config.hcl
+/config.hcl
 
 # Access Token
 *.token
 
 # Unseal Key
 .key
+
+# AppRole authenticate
+*.id
+
+# PKI
+*.pem
+*.crt
+*.csr

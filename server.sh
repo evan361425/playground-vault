@@ -11,7 +11,8 @@ done
 if [ $(lsof -nP | grep LISTEN | grep -c vault) = 0 ]; then
   echo 'Building Server!'
   vault server -config=config.hcl &
-  sleep 2
+  echo 'Waiting Server...'
+  sleep 1
 fi
 
 # 0 => unsealed, 1 error, 2 => sealed
@@ -19,20 +20,25 @@ vault status > /dev/null
 
 # if sealed then unsealed it
 if [ $? -eq 2 ]; then
-  status=$(vault status | grep '^Initialized' | awk '{print $1}')
+  status=$(vault status | grep '^Initialized' | awk '{print $2}')
   if [ $status = 'false' ]; then
-    echo 'Start Initialization'
+    echo 'Start Initialization!'
     result=$(vault operator init -key-shares=1 -key-threshold=1)
 
-    unseal_key=$($result | grep '^Unseal' | awk '{print $4}')
-    token=$($result | grep '^Initial' | awk '{print $4}')
-    echo $token > 'root.token'
-    echo $unseal_key > '.key'
+    echo "$result" | grep '^Unseal Key' | awk '{print $4}' > .key
+    echo "$result" | grep '^Initial Root Token' | awk '{print $4}' > root.token
   fi
 
   echo 'Unsealing'
-  vault write sys/unseal key=$(cat '.key')
+  curl -s \
+    --request PUT \
+    --data "{\"key\":\"$(cat '.key')\"}" \
+    "$VAULT_ADDR/v1/sys/unseal" > /dev/null
 fi
+
+# HA mode change from standby to active
+echo 'Try login...'
+sleep 1
 
 # if find token then login
 if [ -f 'root.token' ]; then
