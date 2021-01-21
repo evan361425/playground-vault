@@ -24,5 +24,5 @@ vault token create \
 #   > /dev/null
 
 # Do truncate CRL
-# vault read intermediate-pki/crl/rotate
+# vault read int-pki/crl/rotate
 # vault read root-pki/crl/rotate
