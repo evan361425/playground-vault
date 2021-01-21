@@ -15,10 +15,12 @@
 -   可以在透過參數 `min_decryption_version` 禁止使用過舊的金鑰。
 -   若轉換過多金鑰會造成效率問題
     -   可以產生全新的金鑰來避免過大的鑰匙版本
+    -   `key1:v8:abc...` => post to `key1` with `vault:v8:abc...`
+    -   `key2:v6:def...` => post to `key2` with `vault:v6:def...`
 
 # 金鑰版本限制
 
--   `min_available_version`, `min_decryption_version`, `min_encryption_version`
+-   `min_decryption_version`, `min_encryption_version`, `min_available_version`（刪除舊版本的金鑰）
 -   如果要逐步淘汰舊版的金鑰呢？
 -   rewrap -   把指定的密文解密並重新用新的金鑰加密
     -   `key_version` -   預設為最新版的金鑰
@@ -40,7 +42,10 @@
 -   輸入明文外還要輸入 `nonce`。
 
 ## Datakey generation
+-   用途之一：加密大量資料，避免頻寬的佔用。
 -   產生鑰匙。
 -   利用加解密金鑰加密此鑰匙。
--   輸出該鑰匙。
--   用途之一：加密大量資料，避免頻寬的佔用。
+    1. 輸出加密後的鑰匙
+        - 重新要求解密得到真正的鑰匙
+    2. 直接輸出真正的鑰匙
+    3. 預設：兩個都輸出

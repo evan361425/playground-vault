@@ -21,7 +21,7 @@ auto_auth {
   sink file {
     wrap_ttl = "5m"
     config = {
-      path = "sink.txt"
+      path = "sink.json"
     }
   }
 }
@@ -39,4 +39,9 @@ template {
 template {
   source      = "src/key.tpl"
   destination = "cert/client.pem"
+}
+
+template {
+  source      = "src/secret.tpl"
+  destination = "src/secret.txt"
 }

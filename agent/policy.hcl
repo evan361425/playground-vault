@@ -17,6 +17,10 @@ path "auth/token/renew-self" {
 }
 
 # Some secrets
-path "secret/playground" {
+path "playground/*" {
+  capabilities = ["create", "read", "update", "delete", "list"]
+}
+
+path "playground/exist/*" {
   capabilities = ["create", "read", "update", "delete", "list"]
 }

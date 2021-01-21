@@ -8,15 +8,24 @@ Agent? see [here](https://hackmd.io/@Lu-Shueh-Chou/ryAnPIrkO)
 
 # 目錄
 
+-   [Agent](#agent)
 -   [Authenticate](#authenticate)
 -   [High Availability](#high-availability)
 -   [PKI](#pki)
 -   [Token](#token)
 -   [Transit](#transit)
 
+## Agent
+
+Use agent to help you auto-renew token or lease.
+
+You can also use consul-template to output the result!
+
+[detail](agent/README.md)
+
 ## Authenticate
 
-GitHub as example
+GitHub or AppRole as example
 
 [detail](authenticate/README.md)
 

@@ -9,10 +9,10 @@ done
 
 # check vault is listening
 if [ $(lsof -nP | grep LISTEN | grep -c vault) = 0 ]; then
-  echo 'Building Server!'
+  echo 'Start building server!'
   vault server -config=config.hcl &
-  echo 'Waiting Server...'
-  sleep 1
+  echo 'Waiting initialization...'
+  sleep 3
 fi
 
 # 0 => unsealed, 1 error, 2 => sealed
@@ -36,14 +36,18 @@ if [ $? -eq 2 ]; then
     "$VAULT_ADDR/v1/sys/unseal" > /dev/null
 fi
 
-# HA mode change from standby to active
-echo 'Try login...'
-sleep 1
+# if not login try login
+name=$(vault token lookup | grep policies | awk '{print $2}')
+if [ $name != '[root]' ]; then
+  # HA mode change from standby to active
+  echo 'Try login...'
+  sleep 1
 
-# if find token then login
-if [ -f 'root.token' ]; then
-  vault login $(cat 'root.token')
-else
-  echo "Can't find token"
-  exit 1;
+  # if find token then login
+  if [ -f 'root.token' ]; then
+    vault login $(cat 'root.token')
+  else
+    echo "Can't find token"
+    exit 1;
+  fi
 fi

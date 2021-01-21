@@ -14,15 +14,25 @@ vault token create \
   -policy=intermediate-pki \
   -ttl=1h > pki.token
 
-# Get certificate
-# vault write -format=json \
-#   int-pki/issue/example-dot-com \
-#   common_name="blah.example.com" | tee \
-#   >(jq -r .data.ca_chain > cert/client.ca-chain.pem) \
-#   >(jq -r .data.certificate > cert/client.crt) \
-#   >(jq -r .data.private_key > cert/client.pem) \
-#   > /dev/null
+# Get certificate manually
+: '
+vault write -format=json \
+  int-pki/issue/example-dot-com \
+  common_name="blah.example.com" | tee \
+  >(jq -r .data.ca_chain > cert/client.ca-chain.pem) \
+  >(jq -r .data.certificate > cert/client.crt) \
+  >(jq -r .data.private_key > cert/client.pem) \
+  > /dev/null
+'
 
 # Do truncate CRL
-# vault read int-pki/crl/rotate
-# vault read root-pki/crl/rotate
+: '
+vault read int-pki/crl/rotate
+vault read root-pki/crl/rotate
+'
+
+# Clean up
+: '
+vault secrets disable int-pki
+vault secrets disable root-pki
+'

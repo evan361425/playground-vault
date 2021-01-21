@@ -55,3 +55,10 @@ vault write -field=ciphertext \
 # Trim key (delete version 1)
 vault write transit/keys/example/config min_decryption_version=2
 vault write transit/keys/example/trim min_available_version=2
+
+# Clean up
+: '
+vault write transit/keys/example/config deletion_allowed=1
+vault delete transit/keys/example
+vault secrets disable transit
+'
