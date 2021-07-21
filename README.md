@@ -6,14 +6,21 @@ Some useful demo see [here](https://hackmd.io/idIbJh-aRj-yT7_1Q5AqKQ)
 
 Agent? see [here](https://hackmd.io/@Lu-Shueh-Chou/ryAnPIrkO)
 
-# 目錄
+Run up Vault:
 
--   [Agent](#agent)
--   [Authenticate](#authenticate)
--   [High Availability](#high-availability)
--   [PKI](#pki)
--   [Token](#token)
--   [Transit](#transit)
+```script
+$ export VAULT_ADDR=http://localhost:8200
+$ sh server.sh
+```
+
+**目錄**
+
+- [Agent](#agent)
+- [Authenticate](#authenticate)
+- [High Availability](#high-availability)
+- [PKI](#pki)
+- [Token](#token)
+- [Transit](#transit)
 
 ## Agent
 
@@ -49,10 +56,10 @@ This will need `consul-template`, please install first.
 
 Do some token stuff
 
--   List accessor
--   Batch token
--   Wrap token
--   Revoke token by accessor
+- List accessor
+- Batch token
+- Wrap token
+- Revoke token by accessor
 
 [detail](token/README.md)
 
@@ -60,12 +67,12 @@ Do some token stuff
 
 Encryption as server
 
--   Encryption
--   Decryption
--   Key rotate
--   Disable old key to encrypt / decrypt
--   Rewrap cipher
--   Remove old key
+- Encryption
+- Decryption
+- Key rotate
+- Disable old key to encrypt / decrypt
+- Rewrap cipher
+- Remove old key
 
 [detail](transit/README.md)
 
