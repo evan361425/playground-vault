@@ -1,5 +1,5 @@
 # Intermediate CA issue you!
-path "int-pki/issue/*" {
+path "int-pki/issue/example-dot-com" {
   "capabilities" = ["create", "update"]
 }
 
