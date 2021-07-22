@@ -27,8 +27,8 @@ vault write -format=json \
 
 # Do truncate CRL
 : '
-vault read int-pki/crl/rotate
-vault read root-pki/crl/rotate
+vault write root-pki/tidy tidy_revoked_certs=true
+vault write int-pki/tidy tidy_revoked_certs=true
 '
 
 # Clean up

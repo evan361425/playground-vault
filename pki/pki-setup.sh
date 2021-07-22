@@ -5,8 +5,6 @@ vault secrets enable -path=root-pki pki
 vault write root-pki/root/generate/internal \
   common_name="My Root CA" \
   ttl=24h
-# Truncate expired certifciate
-vault write root-pki/tidy tidy_revoked_certs=true
 
 # issuing certificate, CRL distribution points, and OCSP server endpoints
 # Urls
@@ -23,8 +21,6 @@ vault write -field=csr \
   int-pki/intermediate/generate/internal \
   common_name="My Intermediate CA" \
   ttl=12h > cert/intermediate.csr
-# Truncate expired certifciate
-vault write int-pki/tidy tidy_revoked_certs=true
 
 # Get signed CSR from root
 vault write -field=certificate \
