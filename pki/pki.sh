@@ -11,6 +11,7 @@ vault policy write intermediate-pki policy.hcl
 # Token
 vault token create \
   -field=token \
+  -display_name=intermediate-token \
   -policy=intermediate-pki \
   -ttl=1h > pki.token
 

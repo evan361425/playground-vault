@@ -3,6 +3,7 @@
 # go to root folder
 path=$PWD
 while [ ! -f "$path/server.sh" -a $path != '.' ]; do
+  echo "$path is not in root of project, try going back"
   path=$(dirname $path)
   cd ..
 done
@@ -23,9 +24,12 @@ if [ $? -eq 2 ]; then
   status=$(vault status | grep '^Initialized' | awk '{print $2}')
   if [ $status = 'false' ]; then
     echo 'Start Initialized!'
-    result=$(vault operator init -key-shares=1 -key-threshold=1)
+    result=$(vault operator init -key-shares=1 -key-threshold=1 -recovery-shares=1 -recovery-threshold=1)
 
+    # there was only one will be shown
     echo "$result" | grep '^Unseal Key' | awk '{print $4}' > .key
+    echo "$result" | grep '^Recovery Key' | awk '{print $4}' > .key
+
     echo "$result" | grep '^Initial Root Token' | awk '{print $4}' > root.token
   fi
 
@@ -39,8 +43,8 @@ if [ $? -eq 2 ]; then
 fi
 
 # if not login try login
-name=$(vault token lookup | grep policies | awk '{print $2}')
-if [ "$name" != "[root]" ]; then
+name=$(vault token lookup &> >(grep display_name | awk '{print $2}'))
+if [ "$name" != "root" ] && [ "$IGNORE_LOGIN" != "true" ]; then
   # HA mode change from standby to active
   echo 'Try login...'
   sleep 1
